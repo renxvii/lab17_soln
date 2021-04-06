@@ -399,9 +399,9 @@ class square_rect (p : point) (s : float) : shape =
 
 (*....................................................................
 Exercise 3B: Now, implement a `square_center_scale` class that
-inherits from square, but *overrides* the `scale` method so that the
-center (rather than the lower-left corner) of the square stays in the
-same place.
+inherits from `square_rect`, but *overrides* the `scale` method so
+that the center (rather than the lower-left corner) of the square
+stays in the same place.
 
 You may find this tricky because you don't have access to the instance
 variables of the class that you inherit from. (Why is this?) A hint:
@@ -498,7 +498,7 @@ class type quad =
             |                            |
     +-------+---------+             +----+-----------+
     |                 |  inherits   |                |
-    | square_quad (C) <-------------+  rect_quad (C) |
+    | square_quad (C) +-------------> rect_quad (C) |
     |                 |             |                |
     +-----------------+             +----------------+
 
