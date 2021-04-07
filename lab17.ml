@@ -409,16 +409,16 @@ First scale, then translate the center back to its original position.
 ....................................................................*)
 
 class square_center_scale (p : point) (s : float) : shape =
-  object
+  object (this)
     inherit square_rect p s as super
 
     method! scale (k : float) : unit =
-      let (x1, y1) = super#center in
+      let (x1, y1) = this#center in
       (* scale *)
       let _ = super#scale k in
-      let (x2, y2) = super#center in
+      let (x2, y2) = this#center in
       (* translate back to center *)
-      super#translate ((x1 -. x2), (y1 -. y2))
+      this#translate ((x1 -. x2), (y1 -. y2))
   end ;;
 
 (* Some in lab were enticed to try to directly refer to the `pos`
@@ -436,7 +436,13 @@ class square_center_scale (p : point) (s : float) : shape =
    information-hiding role of the class type, introducing a design
    flaw in the overall system; classes should generally be explicit
    about their signatures (via class types) to provide a strong
-   abstraction barrier. *)
+   abstraction barrier. 
+
+   Why refer to `this#center` versus `super#center`? By virtue of
+   inheritance, these refer to the same method, so either will give
+   the same result. Nonetheless, we might prefer `this#center` in
+   order to "future-proof" the code in case the `center` or
+   `translate` methods are overridden later. *)
      
 (* Before we move on, consider: do you need to make any modifications
 to the `area` function you wrote in Exercise 2D to support these new
